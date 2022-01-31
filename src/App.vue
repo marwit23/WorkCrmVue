@@ -1,6 +1,15 @@
 <template>
   <div id="app">
-    <router-view />
+    <div v-if="allProjects.length < 1" class="app-message text-center">
+      <p>
+        Data is loading...If this is your first time launching the app, it may take about 30 seconds for the
+        database to wake up.
+      </p>
+      <b-spinner label="Spinning"></b-spinner>
+    </div>
+    <div v-else>
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -9,25 +18,37 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
-  components: {
+  components: {},
 
+  data(){
+    return {
+
+    }
   },
   computed: {
     ...mapGetters(["allProjects"]),
   },
   methods: {
-    ...mapActions([
-      "getAllProjects",
-    ]),
+    ...mapActions(["getAllProjects"]),
   },
   created() {
-    // this.getAllProjects();
-    // console.log("huju" + this.allProjects);
+    this.getAllProjects();
+    console.log("App - all projects" + this.allProjects);
   },
 };
 </script>
 
 <style>
+
+#app {
+  font-size: 90%;
+  height: 100vh;
+}
+
+.app-hover:hover {
+  cursor: pointer;
+}
+
 .app-message {
   margin-top: 50px;
 }

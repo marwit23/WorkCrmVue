@@ -27,6 +27,7 @@ export default {
 		onSubmit() {
 			this.deleteProject(this.propProject.projectId);
 		},
+
 	},
 };
 </script>

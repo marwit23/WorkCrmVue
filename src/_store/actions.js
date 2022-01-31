@@ -43,9 +43,9 @@ export default {
             }
         })
         console.log(response.data)
-        commit('newRecipe', response.data);
+        commit('newProject', response.data);
         if (response.status === 200) {
-            router.push({ path: '/projects' });
+            router.push({ path: '/' });
         }
     },
 
@@ -71,10 +71,10 @@ export default {
                 password: 'admin'
             }
         });
-        commit('updateRecipe', response.data);
-        if (response.status === 200) {
-            router.push({ path: '/projects' });
-        }
+        commit('updateProject', response.data);
+        // if (response.status === 200) {
+        //     router.push({ path: '/projects' });
+        // }
     },
 
 

@@ -1,0 +1,13 @@
+Sprawdzić i uporządkować metody, computed i css
+Podpowiedzi
+Walidacje
+Fixed height
+Poprawić kolumny w project list
+Project list overflow-hidden?
+Zrobić desktop app?
+Wrzucić backend na heroku
+Project title bold
+AddProject styling
+Wrzucić na Github
+
+

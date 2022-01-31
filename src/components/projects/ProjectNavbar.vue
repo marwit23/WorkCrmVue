@@ -1,74 +1,117 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="dark">
-    <!-- LOGO -->
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <!-- LOGO -->
 
-    <div id="logo">
-      <!-- <img src="../_assets/logo3.png" alt="logo" class="navbar-brand app-logo" /> -->
-    </div>
+      <div id="logo">
+        <img src="../../_assets/logo3.png" alt="logo" class="navbar-brand app-logo app-hover" @click="selectStatus('')" />
+      </div>
 
-    <!-- FILTER BY INDUSTRY -->
+      <!-- ALERTS -->
 
-   <b-form inline class="ml-4">
-          <label for="filter">Industry</label>
-          <b-col class="sm-10">
-            <b-form-select id="filter" v-model="selectedIndustry" @change="selectIndustry">
-              <option value="">ALL</option>
-              <option>Pharma</option>
-              <option>Food</option>
-              <option>Cosmetics</option>
-              <option>Other</option>
-            </b-form-select>
-          </b-col>
-        </b-form>
+      <button
+        class="btn btn-sm margin-right px-2" @click="selectStatus('ALERTS')" :class="[selectedStatus==='ALERTS' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="danger" icon="bell"></b-icon>
+        </button>
 
-    <!-- FILTER BY STATUS -->
+      <button class="btn btn-sm margin-right px-2" @click="selectStatus('TENDERS')" :class="[selectedStatus==='TENDERS' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="warning" icon="hammer"></b-icon>
+      </button>
 
-    <b-form inline class="ml-4">
-          <label for="filter">Status</label>
-          <b-col class="sm-10">
-            <b-form-select id="filter" v-model="selectedStatus" @change="selectStatus">
-              <option value="">ALL</option>
-              <option>Cold</option>
-              <option>Warm</option>
-              <option>Hot</option>
-              <option>Killed</option>
-              <option>Killed_And_Dead</option>
-            </b-form-select>
-          </b-col>
-        </b-form>
+      <button class="btn btn-sm margin-right px-2" @click="selectStatus('MEETING')" :class="[selectedStatus==='MEETING' ? 'btn-active' : 'btn-light']">
+      <b-icon variant="success" icon="person-fill"></b-icon>
+      </button>
 
-        <!-- SORT -->
+      <!-- INQUIRY -->
+      <div class="margin-small">
+      <button
+        class="btn btn-sm margin-right px-3" @click="selectStatus('INQUIRY_OFFER_SENT')" :class="[selectedStatus==='INQUIRY_OFFER_SENT' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="success" icon="box-arrow-right"></b-icon>
+        </button>
 
-        <!-- <b-form inline class="ml-4">
-          <label for="sort">Sort by</label>
-          <b-col class="sm-10">
-            <b-input-group>
-              <b-form-select id="sortParam" v-model="sortParam">
-                <option value="projectId" selected>Id</option>
-                <option value="createdDate">Shelf life</option>
-                <option value="statusType">Available quantity</option>
-              </b-form-select>
-              <template #append>
-                <b-button class="btn btn-light" @click="sortAsc = !sortAsc">
-                  <b-icon v-if="sortAsc" icon="chevron-up"></b-icon>
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('INQUIRY_IN_TALKS')" :class="[selectedStatus==='INQUIRY_IN_TALKS' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="primary" icon="chat"></b-icon>
+      </button>
+
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('INQUIRY_INITIAL')" :class="[selectedStatus==='INQUIRY_INITIAL' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="info" icon="funnel-fill"></b-icon>
+      </button>
+
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('INQUIRY_NO_CONTACT')" :class="[selectedStatus==='INQUIRY_NO_CONTACT' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="dark" icon="telephone-x-fill"></b-icon>
+      </button>
+      </div>
+
+      <!-- LONG -->
+      <div class="margin-small">
+
+       <button class="btn btn-sm margin-right px-3" @click="selectStatus('LONG_PROSPECT')" :class="[selectedStatus==='LONG_PROSPECT' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="secondary" icon="bookmark-fill"></b-icon>
+      </button>
+
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('LONG_UNDEFINED')" :class="[selectedStatus==='LONG_UNDEFINED' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="secondary" icon="bookmark"></b-icon>
+      </button>
+
+      </div>
+
+
+
+      <!-- ORDERS -->
+
+      <div class="margin-small">
+
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('ORDER_OPEN')" :class="[selectedStatus==='ORDER_OPEN' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="success" icon="archive"></b-icon>
+      </button>
+
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('ORDER_CLOSED')" :class="[selectedStatus==='ORDER_CLOSED' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="success" icon="archive-fill"></b-icon>
+      </button>
+      </div>
+
+      <!-- KILLED -->
+
+<div class="margin-small">
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('KILLED_ONLY')" :class="[selectedStatus==='KILLED_ONLY' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="dark" icon="trash"></b-icon>
+      </button>
+      <button class="btn btn-sm margin-right px-3" @click="selectStatus('KILLED_AND_DEAD')" :class="[selectedStatus==='KILLED_AND_DEAD' ? 'btn-active' : 'btn-light']">
+        <b-icon variant="dark" icon="trash-fill"></b-icon>
+      </button>
+      </div>
+      <div class="margin-small">
+        <b-input-group size="sm">
+        <b-form-select
+            class="form-select"
+            style="font-size:100%"
+            id="statusType"
+            v-model="selectedSortParam"
+            @change="selectSortParam"
+          >
+            <b-form-select-option value="statusDate" selected>Status date</b-form-select-option>
+            <b-form-select-option value="projectValue">Project value</b-form-select-option>
+            <b-form-select-option value="projectId">Project Id</b-form-select-option>
+          </b-form-select>
+          <template #append>
+                <b-button class="btn btn-secondary btn-sm" @click="selectSortAsc">
+                  <b-icon v-if="selectedSortAsc" icon="chevron-up"></b-icon>
                   <b-icon v-else icon="chevron-down"></b-icon>
                 </b-button>
               </template>
-            </b-input-group>
-          </b-col>
-        </b-form> -->
-
-    <!-- SEARCH -->
-<!-- 
-    <div>
-      <b-form inline class="ml-3">
-        <label for="search">Search</label>
-        <b-col sm="10">
-          <b-form-input label="search" id="search" type="text" v-model="search" />
-        </b-col>
-      </b-form>
-    </div> -->
-  </b-navbar>
+        </b-input-group>
+      </div>
+      <div class="margin-small">
+        <b-form-input
+          type="text"
+          size="sm"
+          placeholder="Search"
+          v-model="selectedSearch"
+          @input="selectSearch"
+        />
+      </div>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
@@ -77,24 +120,50 @@ export default {
 
   data() {
     return {
-      selectedStatus: null,
-      selectedIndustry: null,
-
+      selectedStatus: "",
+      selectedIndustry: "",
+      selectedType: "",
+      selectedSearch: "",
+      selectedSortParam: "",
+      selectedSortAsc: false,
+      selectedFlag: false,
+      clicked:""
     };
   },
 
   methods: {
-
-    selectStatus(event) {
-      this.$emit('updateStatus', event.target.value )
+    selectSearch() {
+      this.$emit("updateSearch", this.selectedSearch);
     },
 
-    selectIndustry(event) {
-      this.$emit('updateIndustry', event.target.value)
-    }
+    selectStatus(value) {
+      this.selectedStatus = value;
+      this.clicked = value;
+      this.$emit("updateStatus", this.selectedStatus);
+    },
+
+    selectSource() {
+      this.$emit("updateSource", this.selectedSource);
+    },
+
+    selectIndustry() {
+      console.log("Selected industry" + this.selectedIndustry);
+      this.$emit("updateIndustry", this.selectedIndustry);
+    },
+
+    selectSortParam() {
+      console.log("navbar - sortparam - " + this.selectedSortParam)
+      this.$emit("updateSortParam", this.selectedSortParam)
+    },
+    selectSortAsc() {
+      this.selectedSortAsc = !this.selectedSortAsc
+      console.log("navbar - sortasc - " + this.selectedSortAsc)
+      this.$emit("updateSortAsc", this.selectedSortAsc)
+    },
 
 
-  }
+   
+  },
 };
 </script>
 
@@ -106,52 +175,20 @@ export default {
   padding-left: 10px;
 }
 
-.dropbtn {
-  /*background-color: #4caf50;*/
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+.btn-active {
+  background-color: #bebebe;
 }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-left: 50px;
+.margin-right {
+  margin-right: 3px;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #ededed;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+.margin-big {
+  margin-left: 20px;
 }
 
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.margin-small {
+  margin-left: 10px;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-  background-color: #d6d6d6;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-}
 </style>
